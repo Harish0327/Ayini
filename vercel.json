@@ -1,6 +1,6 @@
 {
-  "buildCommand": "cd tee && npm install --registry=https://registry.npmjs.org --no-optional && npm run build",
+  "buildCommand": "cd tee && npm install --force && npm run build",
   "outputDirectory": "tee/.next",
-  "installCommand": "echo 'Skipping install'",
+  "installCommand": "cd tee && npm install --force",
   "framework": "nextjs"
 }
