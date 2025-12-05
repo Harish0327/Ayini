@@ -49,17 +49,17 @@ const ProductCard = ({ id, name, price, image, category, weight, variants }: Pro
             variant="ghost"
             size="icon"
             onClick={handleToggleLike}
-            className="absolute top-3 right-3 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm transform scale-0 group-hover:scale-100 transition-all duration-300"
+            className="absolute top-2 right-2 md:top-3 md:right-3 bg-white/90 hover:bg-white shadow-lg backdrop-blur-sm transform scale-0 group-hover:scale-100 transition-all duration-300 w-8 h-8 md:w-10 md:h-10"
           >
-            <Heart className={`h-4 w-4 ${isLiked ? 'text-red-500 fill-red-500' : 'text-green-500'}`} />
+            <Heart className={`h-3 w-3 md:h-4 md:w-4 ${isLiked ? 'text-red-500 fill-red-500' : 'text-green-500'}`} />
           </Button>
 
         </div>
       </Link>
-      <CardContent className="p-6">
-        <div className="mb-4">
+      <CardContent className="p-3 md:p-6">
+        <div className="mb-3 md:mb-4">
           <Link href={`/product/${id}`}>
-            <h3 className="font-bold text-xl hover:text-transparent hover:bg-gradient-to-r hover:from-green-600 hover:to-green-600 hover:bg-clip-text transition-all duration-300 mb-2">
+            <h3 className="font-bold text-sm md:text-xl hover:text-transparent hover:bg-gradient-to-r hover:from-green-600 hover:to-green-600 hover:bg-clip-text transition-all duration-300 mb-1 md:mb-2 line-clamp-2">
               {name}
             </h3>
           </Link>
@@ -67,19 +67,19 @@ const ProductCard = ({ id, name, price, image, category, weight, variants }: Pro
             <select 
               value={selectedVariant} 
               onChange={(e) => setSelectedVariant(Number(e.target.value))}
-              className="text-sm text-gray-500 font-medium bg-transparent border-none outline-none cursor-pointer"
+              className="text-xs md:text-sm text-gray-500 font-medium bg-transparent border-none outline-none cursor-pointer"
             >
               {variants.map((variant, index) => (
                 <option key={index} value={index}>{variant.weight}</option>
               ))}
             </select>
           ) : (
-            <p className="text-sm text-gray-500 font-medium">{currentVariant.weight}</p>
+            <p className="text-xs md:text-sm text-gray-500 font-medium">{currentVariant.weight}</p>
           )}
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-2 md:space-y-0">
           <div className="flex flex-col">
-            <p className="text-2xl font-bold bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent">
+            <p className="text-lg md:text-2xl font-bold bg-gradient-to-r from-green-600 to-green-600 bg-clip-text text-transparent">
               ₹{currentVariant.price}
             </p>
             {currentVariant.mrp && (
@@ -89,10 +89,11 @@ const ProductCard = ({ id, name, price, image, category, weight, variants }: Pro
           <Button 
             size="sm" 
             onClick={handleAddToCart}
-            className="gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+            className="gap-1 md:gap-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 text-xs md:text-sm w-full md:w-auto"
           >
-            <ShoppingCart className="h-4 w-4" />
-            Add to Cart
+            <ShoppingCart className="h-3 w-3 md:h-4 md:w-4" />
+            <span className="hidden sm:inline">Add to Cart</span>
+            <span className="sm:hidden">Add</span>
           </Button>
         </div>
       </CardContent>
