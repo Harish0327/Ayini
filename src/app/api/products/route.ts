@@ -50,10 +50,13 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    console.log('Creating product:', body);
     const result = await Database.createProduct(body);
+    console.log('Product created:', result);
     return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create product' }, { status: 500 });
+    console.error('Create product error:', error);
+    return NextResponse.json({ error: 'Failed to create product', details: error.message }, { status: 500 });
   }
 }
 
@@ -62,13 +65,16 @@ export async function PUT(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
     const body = await request.json();
+    console.log('Updating product:', id, body);
     if (!id) {
       return NextResponse.json({ error: 'ID required' }, { status: 400 });
     }
     await Database.updateProduct(id, body);
+    console.log('Product updated successfully');
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update product' }, { status: 500 });
+    console.error('Update product error:', error);
+    return NextResponse.json({ error: 'Failed to update product', details: error.message }, { status: 500 });
   }
 }
 
