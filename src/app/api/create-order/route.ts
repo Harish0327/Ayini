@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Razorpay from 'razorpay';
 
+// Updated for live Razorpay credentials
+
 export async function POST(request: NextRequest) {
   try {
+    const { amount, mock } = await request.json();
+    
+    // Mock payment for testing
+    if (mock || process.env.NODE_ENV === 'development') {
+      return NextResponse.json({
+        id: 'mock_order_' + Date.now(),
+        amount: Math.round(amount * 100),
+        currency: 'INR',
+        key_id: 'mock_key_id'
+      });
+    }
+
     console.log('Environment check:', {
       key_id: process.env.RAZORPAY_KEY_ID ? 'Present' : 'Missing',
       key_secret: process.env.RAZORPAY_KEY_SECRET ? 'Present' : 'Missing'
@@ -18,7 +32,7 @@ export async function POST(request: NextRequest) {
       key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
-    const { amount } = await request.json();
+
     console.log('Creating order for amount:', amount);
     
     if (!amount || amount <= 0) {
