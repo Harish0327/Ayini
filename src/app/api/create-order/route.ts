@@ -36,6 +36,8 @@ export async function POST(request: NextRequest) {
     };
     
     console.log('Order options:', options);
+    console.log('Razorpay instance created with key_id:', process.env.RAZORPAY_KEY_ID);
+    
     const order = await razorpay.orders.create(options);
     console.log('Order created successfully:', order.id);
     
@@ -49,11 +51,37 @@ export async function POST(request: NextRequest) {
     console.error('Razorpay order creation failed:', {
       message: error.message,
       statusCode: error.statusCode,
+      description: error.description,
+      field: error.field,
+      source: error.source,
+      step: error.step,
+      reason: error.reason,
+      metadata: error.metadata,
       error: error
     });
+    
+    // Test Razorpay credentials
+    try {
+      const testRazorpay = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID!,
+        key_secret: process.env.RAZORPAY_KEY_SECRET!,
+      });
+      console.log('Razorpay instance created successfully');
+    } catch (credError: any) {
+      console.error('Razorpay credential error:', credError.message);
+    }
+    
     return NextResponse.json({ 
       error: 'Failed to create order',
       details: error.message,
+      razorpay_error: {
+        statusCode: error.statusCode,
+        description: error.description,
+        field: error.field,
+        source: error.source,
+        step: error.step,
+        reason: error.reason
+      },
       env_check: {
         key_id: process.env.RAZORPAY_KEY_ID ? 'Present' : 'Missing',
         key_secret: process.env.RAZORPAY_KEY_SECRET ? 'Present' : 'Missing'
