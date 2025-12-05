@@ -1,15 +1,6 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "tee/next.config.js",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/tee/$1"
-    }
-  ]
+  "buildCommand": "cd tee && npm install --registry=https://registry.npmjs.org --no-optional && npm run build",
+  "outputDirectory": "tee/.next",
+  "installCommand": "echo 'Skipping install'",
+  "framework": "nextjs"
 }
