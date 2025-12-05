@@ -18,10 +18,15 @@ const Shop = () => {
   const fetchProducts = async () => {
     try {
       const response = await fetch('/api/products');
-      const data = await response.json();
-      setProducts(data || []);
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(Array.isArray(data) ? data : []);
+      } else {
+        setProducts([]);
+      }
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }

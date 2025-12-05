@@ -4,9 +4,10 @@ import { Database } from '@/integrations/mongodb/database';
 export async function GET() {
   try {
     const products = await Database.getProducts();
-    return NextResponse.json(products);
+    return NextResponse.json(products || []);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch products' }, { status: 500 });
+    console.error('Products API error:', error);
+    return NextResponse.json([], { status: 200 });
   }
 }
 
