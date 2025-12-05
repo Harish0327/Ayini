@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd tee && npm run build",
+  "outputDirectory": "tee/.next",
+  "installCommand": "cd tee && npm install"
+}
