@@ -4,46 +4,11 @@ import { Database } from '@/integrations/mongodb/database';
 export async function GET() {
   try {
     const products = await Database.getProducts();
+    console.log('Products fetched from DB:', products?.length || 0);
     return NextResponse.json(products || []);
   } catch (error) {
     console.error('Products API error:', error);
-    // Fallback products when database fails
-    const fallbackProducts = [
-      {
-        id: '1',
-        name: 'Idly Podi',
-        description: 'Traditional South Indian spice powder perfect for idly and dosa',
-        price: 150,
-        weight: '250g',
-        image_url: '/assets/IdlyPodi.JPG',
-        ingredients: 'Urad dal, chana dal, red chili, sesame seeds, salt',
-        stock_quantity: 50,
-        is_active: true
-      },
-      {
-        id: '2',
-        name: 'Tea Powder',
-        description: 'Premium blend tea powder for authentic Indian chai',
-        price: 200,
-        weight: '500g',
-        image_url: '/assets/Chaileaf.JPG',
-        ingredients: 'Black tea leaves, cardamom, ginger, cinnamon',
-        stock_quantity: 30,
-        is_active: true
-      },
-      {
-        id: '3',
-        name: 'Green Tea Powder',
-        description: 'Organic green tea powder for healthy living',
-        price: 250,
-        weight: '250g',
-        image_url: '/assets/Greentealeaf.JPG',
-        ingredients: 'Organic green tea leaves',
-        stock_quantity: 25,
-        is_active: true
-      }
-    ];
-    return NextResponse.json(fallbackProducts);
+    return NextResponse.json({ error: 'Database connection failed', details: error.message }, { status: 500 });
   }
 }
 
