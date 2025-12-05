@@ -53,7 +53,11 @@ export async function POST(request: NextRequest) {
     });
     return NextResponse.json({ 
       error: 'Failed to create order',
-      details: error.message 
+      details: error.message,
+      env_check: {
+        key_id: process.env.RAZORPAY_KEY_ID ? 'Present' : 'Missing',
+        key_secret: process.env.RAZORPAY_KEY_SECRET ? 'Present' : 'Missing'
+      }
     }, { status: 500 });
   }
 }
