@@ -7,31 +7,7 @@ export async function GET() {
     return NextResponse.json(products || []);
   } catch (error) {
     console.error('Products API error:', error);
-    const fallbackProducts = [
-      {
-        id: '1',
-        name: 'Idly Podi',
-        description: 'Traditional South Indian spice powder perfect for idly and dosa',
-        price: 150,
-        weight: '250g',
-        image_url: '/assets/IdlyPodi.JPG',
-        ingredients: 'Urad dal, chana dal, red chili, sesame seeds, salt',
-        stock_quantity: 50,
-        is_active: true
-      },
-      {
-        id: '2',
-        name: 'Tea Powder',
-        description: 'Premium blend tea powder for authentic Indian chai',
-        price: 200,
-        weight: '500g',
-        image_url: '/assets/Chaileaf.JPG',
-        ingredients: 'Black tea leaves, cardamom, ginger, cinnamon',
-        stock_quantity: 30,
-        is_active: true
-      }
-    ];
-    return NextResponse.json(fallbackProducts);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
