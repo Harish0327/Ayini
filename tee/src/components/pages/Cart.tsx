@@ -142,7 +142,12 @@ const Cart = () => {
                 orderId: response.razorpay_order_id,
                 paymentId: response.razorpay_payment_id,
                 customerDetails,
-                items: cartItems,
+                items: cartItems.map(item => ({
+                  name: item.name,
+                  weight: item.weight || '',
+                  price: item.price,
+                  quantity: item.quantity
+                })),
                 total: getCartTotal(),
                 date: new Date().toLocaleDateString()
               });
