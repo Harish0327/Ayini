@@ -1,5 +1,7 @@
 {
+  "framework": "nextjs",
   "buildCommand": "cd tee && npm run build",
   "outputDirectory": "tee/.next",
-  "installCommand": "cd tee && npm install"
+  "installCommand": "cd tee && npm install",
+  "rootDirectory": "tee"
 }
