@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "init-db": "node src/scripts/init-db.js"
-
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
