@@ -1,7 +1,12 @@
 {
-  "framework": "nextjs",
-  "buildCommand": "cd tee && npm run build",
-  "outputDirectory": "tee/.next",
-  "installCommand": "cd tee && npm install",
-  "rootDirectory": "tee"
+  "version": 2,
+  "builds": [
+    {
+      "src": "tee/package.json",
+      "use": "@vercel/next",
+      "config": {
+        "rootDirectory": "tee"
+      }
+    }
+  ]
 }
