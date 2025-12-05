@@ -220,55 +220,57 @@ const Cart = () => {
   }
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-6 md:py-12">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Shopping Cart</h1>
+        <h1 className="text-2xl md:text-4xl font-bold text-gray-900 mb-6 md:mb-8">Shopping Cart</h1>
         
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {cartItems.map((item) => (
-              <div key={`${item.id}-${item.weight}`} className="bg-white rounded-lg shadow-md p-6 flex items-center space-x-4">
-                <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-gray-100">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                
-                <div className="flex-1">
-                  <h3 className="font-semibold text-lg text-gray-900">{item.name}</h3>
-                  {item.weight && (
-                    <p className="text-sm text-gray-500">Weight: {item.weight}</p>
-                  )}
-                  <p className="text-green-600 font-bold text-lg">₹{item.price}</p>
-                </div>
+              <div key={`${item.id}-${item.weight}`} className="bg-white rounded-lg shadow-md p-4 md:p-6">
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-lg overflow-hidden bg-gray-100 mx-auto sm:mx-0">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  <div className="flex-1 text-center sm:text-left">
+                    <h3 className="font-semibold text-base md:text-lg text-gray-900">{item.name}</h3>
+                    {item.weight && (
+                      <p className="text-sm text-gray-500">Weight: {item.weight}</p>
+                    )}
+                    <p className="text-green-600 font-bold text-base md:text-lg">₹{item.price}</p>
+                  </div>
 
-                <div className="flex items-center space-x-3">
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity - 1, item.weight)}
-                    className="p-1 border border-gray-300 rounded-md hover:border-green-500 transition-colors"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-                  <span className="w-12 text-center font-semibold">{item.quantity}</span>
-                  <button
-                    onClick={() => updateQuantity(item.id, item.quantity + 1, item.weight)}
-                    className="p-1 border border-gray-300 rounded-md hover:border-green-500 transition-colors"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
+                  <div className="flex items-center justify-center sm:justify-start space-x-3">
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity - 1, item.weight)}
+                      className="p-2 border border-gray-300 rounded-md hover:border-green-500 transition-colors"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="w-12 text-center font-semibold">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.id, item.quantity + 1, item.weight)}
+                      className="p-2 border border-gray-300 rounded-md hover:border-green-500 transition-colors"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
 
-                <div className="text-right">
-                  <p className="font-bold text-lg">₹{item.price * item.quantity}</p>
-                  <button
-                    onClick={() => removeFromCart(item.id, item.weight)}
-                    className="text-red-500 hover:text-red-700 mt-2"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
+                  <div className="text-center sm:text-right">
+                    <p className="font-bold text-base md:text-lg mb-2">₹{item.price * item.quantity}</p>
+                    <button
+                      onClick={() => removeFromCart(item.id, item.weight)}
+                      className="text-red-500 hover:text-red-700 p-2"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
