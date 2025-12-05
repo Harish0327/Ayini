@@ -114,48 +114,48 @@ const Home = () => {
       <HeroSlideshow />
 
       {/* About Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-white">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-green-50 to-white">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-5xl font-bold mb-6 text-gray-900 bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 md:mb-6 text-gray-900 bg-gradient-to-r from-green-600 to-green-800 bg-clip-text text-transparent">
                 Welcome to Taste of Ayini
               </h2>
-              <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed px-4">
                 Bringing you authentic Indian flavors and traditional spice blends. 
                 Our brand is launching soon with premium quality products crafted with love and tradition.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div className="space-y-6">
-                <h3 className="text-3xl font-bold text-green-800 mb-4">About Taste of Ayini</h3>
-                <p className="text-gray-700 leading-relaxed">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="space-y-4 md:space-y-6 px-4 lg:px-0">
+                <h3 className="text-2xl md:text-3xl font-bold text-green-800 mb-4">About Taste of Ayini</h3>
+                <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                   Taste of Ayini is dedicated to bringing authentic Indian flavors to your kitchen. 
                   We specialize in traditional spice blends, powders, and culinary essentials that 
                   capture the true essence of Indian cuisine.
                 </p>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-700 leading-relaxed text-sm md:text-base">
                   Our products are carefully sourced and prepared using time-tested methods to ensure 
                   the highest quality and authentic taste in every package.
                 </p>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
-                  <div className="text-gray-600">Natural Products</div>
+              <div className="grid grid-cols-2 gap-3 md:gap-4 px-4 lg:px-0">
+                <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2">100%</div>
+                  <div className="text-gray-600 text-xs md:text-sm">Natural Products</div>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">Fresh</div>
-                  <div className="text-gray-600">Daily Preparation</div>
+                <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2">Fresh</div>
+                  <div className="text-gray-600 text-xs md:text-sm">Daily Preparation</div>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">Fast</div>
-                  <div className="text-gray-600">Home Delivery</div>
+                <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2">Fast</div>
+                  <div className="text-gray-600 text-xs md:text-sm">Home Delivery</div>
                 </div>
-                <div className="bg-white p-6 rounded-xl shadow-lg text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">24/7</div>
-                  <div className="text-gray-600">Customer Support</div>
+                <div className="bg-white p-4 md:p-6 rounded-xl shadow-lg text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 mb-2">24/7</div>
+                  <div className="text-gray-600 text-xs md:text-sm">Customer Support</div>
                 </div>
               </div>
             </div>
@@ -176,24 +176,24 @@ const Home = () => {
       </section>
 
       {/* Featured Products */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
               Our Bestsellers
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
               Discover our most loved traditional spice blends and powders
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 mb-8 md:mb-12">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} {...product} />
             ))}
           </div>
           <div className="text-center">
             <Link href="/shop">
-              <Button size="lg" variant="outline" className="border-green-300 text-green-700 hover:bg-green-50">
+              <Button size="lg" variant="outline" className="border-green-300 text-green-700 hover:bg-green-50 w-full sm:w-auto">
                 View All Products
               </Button>
             </Link>
@@ -202,22 +202,22 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4 text-gray-900">What Our Customers Say</h2>
-            <div className="flex justify-center items-center space-x-8">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">What Our Customers Say</h2>
+            <div className="flex justify-center items-center space-x-6 md:space-x-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">4.9/5</div>
-                <div className="text-yellow-500">★★★★★</div>
+                <div className="text-xl md:text-2xl font-bold text-green-600">4.9/5</div>
+                <div className="text-yellow-500 text-sm md:text-base">★★★★★</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">2,500+</div>
-                <div className="text-gray-600">Reviews</div>
+                <div className="text-xl md:text-2xl font-bold text-green-600">2,500+</div>
+                <div className="text-gray-600 text-sm md:text-base">Reviews</div>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
               {
                 name: "Priya Sharma",
@@ -235,14 +235,14 @@ const Home = () => {
                 rating: 5,
               },
             ].map((testimonial, index) => (
-              <div key={index} className="bg-gray-50 p-6 rounded-xl">
+              <div key={index} className="bg-gray-50 p-4 md:p-6 rounded-xl">
                 <div className="flex mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-500 text-lg">★</span>
+                    <span key={i} className="text-yellow-500 text-base md:text-lg">★</span>
                   ))}
                 </div>
-                <p className="text-gray-700 mb-4">"{testimonial.text}"</p>
-                <p className="font-semibold text-gray-900">- {testimonial.name}</p>
+                <p className="text-gray-700 mb-4 text-sm md:text-base">"{testimonial.text}"</p>
+                <p className="font-semibold text-gray-900 text-sm md:text-base">- {testimonial.name}</p>
               </div>
             ))}
           </div>
@@ -250,28 +250,28 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-green-600">
+      <section className="py-12 md:py-20 bg-gradient-to-r from-green-600 to-green-600">
         <div className="container mx-auto px-4 text-center text-white">
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-4xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 md:mb-6">
               Ready to Transform Your Cooking?
             </h2>
-            <p className="text-xl mb-8 opacity-90">
+            <p className="text-lg md:text-xl mb-6 md:mb-8 opacity-90 px-4">
               Join thousands of happy customers who have discovered the authentic taste of India.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/shop">
-                <Button size="lg" className="bg-white text-green-600 hover:bg-green-50 px-8 py-4 text-lg font-semibold">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center px-4">
+              <Link href="/shop" className="w-full sm:w-auto">
+                <Button size="lg" className="bg-white text-green-600 hover:bg-green-50 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold w-full sm:w-auto">
                   Shop Now
                 </Button>
               </Link>
-              <Link href="/contact">
-                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg">
+              <Link href="/contact" className="w-full sm:w-auto">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg w-full sm:w-auto">
                   Contact Us
                 </Button>
               </Link>
             </div>
-            <div className="mt-8 text-sm opacity-80">
+            <div className="mt-6 md:mt-8 text-xs md:text-sm opacity-80 px-4">
               Free shipping on orders above ₹500 • 30-day money-back guarantee
             </div>
           </div>
