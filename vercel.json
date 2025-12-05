@@ -1,6 +1,0 @@
-{
-  "buildCommand": "cd tee && npm install --force && npm run build",
-  "outputDirectory": "tee/.next",
-  "installCommand": "cd tee && npm install --force",
-  "framework": "nextjs"
-}
