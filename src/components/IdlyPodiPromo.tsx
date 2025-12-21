@@ -3,8 +3,17 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowUpRight, Cookie } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const IdlyPodiPromo = () => {
+  const router = useRouter();
+
+  const handleOrderNow = () => {
+    // Find Idly Podi product and redirect to it
+    router.push('/shop');
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-6">
       <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -56,10 +65,17 @@ const IdlyPodiPromo = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-12">
-                <Button className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold">
+                <Button 
+                  className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-semibold"
+                  onClick={handleOrderNow}
+                >
                   Taste the Tradition
                 </Button>
-                <Button variant="outline" className="border-orange-400 text-orange-600 hover:bg-orange-50 px-8 py-3 rounded-full font-semibold">
+                <Button 
+                  variant="outline" 
+                  className="border-orange-400 text-orange-600 hover:bg-orange-50 px-8 py-3 rounded-full font-semibold"
+                  onClick={handleOrderNow}
+                >
                   <Cookie className="w-5 h-5 mr-2" />
                   Order Now
                 </Button>

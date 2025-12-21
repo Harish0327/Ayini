@@ -13,21 +13,7 @@ const ProtectedRoute = ({ children, requireAdmin = false }: ProtectedRouteProps)
   const router = useRouter();
 
   useEffect(() => {
-    // Development bypass - allow admin access without authentication
-    if (requireAdmin) {
-      // Check if user has clicked "Admin Access" button or has admin flag in localStorage
-      const hasAdminAccess = localStorage.getItem('dev_admin_access') === 'true';
-      if (!hasAdminAccess) {
-        // Show admin access prompt
-        const allowAccess = confirm('Development Mode: Click OK to access admin panel');
-        if (allowAccess) {
-          localStorage.setItem('dev_admin_access', 'true');
-        } else {
-          router.push('/');
-          return;
-        }
-      }
-    }
+    // Allow admin access for all users
     setLoading(false);
   }, [requireAdmin, router]);
 
