@@ -332,19 +332,48 @@ const Products = () => {
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        if (file.size > 5 * 1024 * 1024) {
-                          toast.error('Image size should be less than 5MB');
+                        if (file.size > 1 * 1024 * 1024) {
+                          toast.error('Image size should be less than 1MB');
                           return;
                         }
+                        
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        const img = new Image();
+                        
+                        img.onload = () => {
+                          const maxSize = 300;
+                          let { width, height } = img;
+                          
+                          if (width > height) {
+                            if (width > maxSize) {
+                              height = (height * maxSize) / width;
+                              width = maxSize;
+                            }
+                          } else {
+                            if (height > maxSize) {
+                              width = (width * maxSize) / height;
+                              height = maxSize;
+                            }
+                          }
+                          
+                          canvas.width = width;
+                          canvas.height = height;
+                          ctx?.drawImage(img, 0, 0, width, height);
+                          
+                          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                          setFormData({ ...formData, image_url: compressedDataUrl });
+                        };
+                        
                         const reader = new FileReader();
                         reader.onload = (e) => {
-                          setFormData({ ...formData, image_url: e.target?.result as string });
+                          img.src = e.target?.result as string;
                         };
                         reader.readAsDataURL(file);
                       }
                     }}
                   />
-                  <p className="text-sm text-gray-500">Upload product image (Max 5MB)</p>
+                  <p className="text-sm text-gray-500">Upload product image (Max 1MB, will be compressed)</p>
                   {formData.image_url && formData.image_url !== '/placeholder.svg' && (
                     <div className="mt-4">
                       <img src={formData.image_url} alt="Preview" className="w-32 h-32 object-cover rounded mx-auto" />
