@@ -41,12 +41,6 @@ const IdlyPodiPromo = () => {
               <p className="text-gray-800 font-bold text-lg mb-3" style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>
                 "Grandma's Secret Recipe"
               </p>
-              <Button 
-                size="sm" 
-                className="bg-white/20 hover:bg-white/30 text-gray-800 rounded-full p-2 w-10 h-10"
-              >
-                <ArrowUpRight className="w-4 h-4" />
-              </Button>
             </div>
           </div>
         </Card>
