@@ -16,12 +16,23 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     console.log('Creating product:', body);
+    
+    // Validate required fields
+    if (!body.name || !body.variants || body.variants.length === 0) {
+      return NextResponse.json({ 
+        error: 'Missing required fields: name and at least one variant' 
+      }, { status: 400 });
+    }
+    
     const result = await Database.createProduct(body);
     console.log('Product created:', result);
-    return NextResponse.json(result);
+    return NextResponse.json({ success: true, ...result });
   } catch (error) {
     console.error('Create product error:', error);
-    return NextResponse.json({ error: 'Failed to create product', details: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Failed to create product', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
 
@@ -31,15 +42,20 @@ export async function PUT(request: NextRequest) {
     const id = searchParams.get('id');
     const body = await request.json();
     console.log('Updating product:', id, body);
+    
     if (!id) {
-      return NextResponse.json({ error: 'ID required' }, { status: 400 });
+      return NextResponse.json({ error: 'Product ID required' }, { status: 400 });
     }
+    
     await Database.updateProduct(id, body);
     console.log('Product updated successfully');
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, message: 'Product updated successfully' });
   } catch (error) {
     console.error('Update product error:', error);
-    return NextResponse.json({ error: 'Failed to update product', details: error.message }, { status: 500 });
+    return NextResponse.json({ 
+      error: 'Failed to update product', 
+      details: error.message 
+    }, { status: 500 });
   }
 }
 

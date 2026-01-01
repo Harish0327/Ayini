@@ -11,19 +11,27 @@ export interface Category {
   updated_at?: Date;
 }
 
+export interface ProductVariant {
+  weight: string;
+  price: number;
+  mrp?: number;
+}
+
 export interface Product {
   _id?: ObjectId;
   id?: string;
   name: string;
-  slug: string;
+  slug?: string;
   description?: string;
-  price: number;
-  weight: string;
+  price?: number;
+  weight?: string;
   image_url?: string;
   ingredients?: string;
+  category?: string;
   category_id?: string;
   stock_quantity?: number;
   is_active?: boolean;
+  variants?: ProductVariant[];
   created_at?: Date;
   updated_at?: Date;
 }

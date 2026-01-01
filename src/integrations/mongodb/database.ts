@@ -49,8 +49,13 @@ export class Database {
   static async createProduct(product: Omit<Product, '_id' | 'id' | 'created_at' | 'updated_at'>) {
     const db = await this.getDb();
     const now = new Date();
+    
+    // Generate slug if not provided
+    const slug = product.slug || product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    
     const result = await db.collection<Product>('products').insertOne({
       ...product,
+      slug,
       created_at: now,
       updated_at: now
     });

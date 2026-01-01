@@ -31,6 +31,7 @@ const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -110,47 +111,73 @@ const Products = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate form data
+    if (!formData.name.trim()) {
+      toast.error('Product name is required');
+      return;
+    }
+    
+    if (!formData.category) {
+      toast.error('Category is required');
+      return;
+    }
+    
+    if (!formData.stock || parseInt(formData.stock) < 0) {
+      toast.error('Valid stock quantity is required');
+      return;
+    }
+    
+    // Validate variants
+    const validVariants = formData.variants.filter(v => v.weight && v.price);
+    if (validVariants.length === 0) {
+      toast.error('At least one variant with weight and price is required');
+      return;
+    }
+    
     const productData = {
-      name: formData.name,
-      description: formData.description,
-      ingredients: formData.ingredients,
+      name: formData.name.trim(),
+      description: formData.description.trim(),
+      ingredients: formData.ingredients.trim(),
       category: formData.category,
       stock_quantity: parseInt(formData.stock),
       image_url: formData.image_url || "/placeholder.svg",
       is_active: formData.is_active,
-      variants: formData.variants.map(v => ({
-        weight: v.weight,
+      variants: validVariants.map(v => ({
+        weight: v.weight.trim(),
         price: parseFloat(v.price),
         mrp: v.mrp ? parseFloat(v.mrp) : undefined
       }))
     };
 
     try {
+      let response;
       if (editingProduct) {
-        // Update product via API
-        const response = await fetch(`/api/products?id=${editingProduct.id}`, {
+        response = await fetch(`/api/products?id=${editingProduct.id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productData)
         });
-        if (!response.ok) throw new Error('Failed to update product');
-        toast.success("Product updated successfully!");
       } else {
-        // Create new product via API
-        const response = await fetch('/api/products', {
+        response = await fetch('/api/products', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(productData)
         });
-        if (!response.ok) throw new Error('Failed to create product');
-        toast.success("Product added successfully!");
       }
       
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to save product');
+      }
+      
+      toast.success(editingProduct ? "Product updated successfully!" : "Product added successfully!");
       setIsDialogOpen(false);
       resetForm();
-      fetchProducts(); // Refresh the products list
+      fetchProducts();
     } catch (error) {
-      toast.error(editingProduct ? "Failed to update product" : "Failed to add product");
+      console.error('Save product error:', error);
+      toast.error(error.message || (editingProduct ? "Failed to update product" : "Failed to add product"));
     }
   };
 
@@ -329,51 +356,40 @@ const Products = () => {
                     type="file"
                     accept="image/*"
                     className="mb-2"
-                    onChange={(e) => {
+                    disabled={isUploading}
+                    onChange={async (e) => {
                       const file = e.target.files?.[0];
                       if (file) {
-                        if (file.size > 1 * 1024 * 1024) {
-                          toast.error('Image size should be less than 1MB');
-                          return;
-                        }
-                        
-                        const canvas = document.createElement('canvas');
-                        const ctx = canvas.getContext('2d');
-                        const img = new Image();
-                        
-                        img.onload = () => {
-                          const maxSize = 300;
-                          let { width, height } = img;
+                        setIsUploading(true);
+                        try {
+                          const formData = new FormData();
+                          formData.append('file', file);
                           
-                          if (width > height) {
-                            if (width > maxSize) {
-                              height = (height * maxSize) / width;
-                              width = maxSize;
-                            }
+                          const response = await fetch('/api/upload', {
+                            method: 'POST',
+                            body: formData
+                          });
+                          
+                          const result = await response.json();
+                          
+                          if (result.success) {
+                            setFormData(prev => ({ ...prev, image_url: result.imageUrl }));
+                            toast.success('Image uploaded successfully!');
                           } else {
-                            if (height > maxSize) {
-                              width = (width * maxSize) / height;
-                              height = maxSize;
-                            }
+                            toast.error(result.error || 'Failed to upload image');
                           }
-                          
-                          canvas.width = width;
-                          canvas.height = height;
-                          ctx?.drawImage(img, 0, 0, width, height);
-                          
-                          const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.6);
-                          setFormData({ ...formData, image_url: compressedDataUrl });
-                        };
-                        
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                          img.src = e.target?.result as string;
-                        };
-                        reader.readAsDataURL(file);
+                        } catch (error) {
+                          console.error('Upload error:', error);
+                          toast.error('Failed to upload image');
+                        } finally {
+                          setIsUploading(false);
+                        }
                       }
                     }}
                   />
-                  <p className="text-sm text-gray-500">Upload product image (Max 1MB, will be compressed)</p>
+                  <p className="text-sm text-gray-500">
+                    {isUploading ? 'Uploading image...' : 'Upload product image (No size limit)'}
+                  </p>
                   {formData.image_url && formData.image_url !== '/placeholder.svg' && (
                     <div className="mt-4">
                       <img src={formData.image_url} alt="Preview" className="w-32 h-32 object-cover rounded mx-auto" />

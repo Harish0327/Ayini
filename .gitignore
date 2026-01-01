@@ -59,3 +59,7 @@ pids
 # Supabase
 supabase/.branches
 supabase/.temp
+
+# Uploads
+public/uploads/*
+!public/uploads/.gitkeep
